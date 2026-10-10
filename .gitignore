@@ -1,0 +1,30 @@
+# Local virtual environments
+.venv/
+venv/
+env/
+
+# Python-generated files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Test and tool caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Local model extraction and evaluation outputs
+models/**/*.safetensors
+models/**/*.bin
+outputs/*
+!outputs/.gitkeep
+evaluation_outputs/
+*.log
+
+# Editor and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
