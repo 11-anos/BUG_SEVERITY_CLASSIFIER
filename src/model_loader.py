@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 import json
+import os
 import sys
 import zipfile
 from dataclasses import dataclass
+from functools import lru_cache
 from pathlib import Path, PurePosixPath
 from typing import Dict
 
@@ -13,7 +15,9 @@ from transformers import AutoModelForSequenceClassification, AutoTokenizer
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 MODEL_ROOT = PROJECT_ROOT / "models"
 MODEL_DIR = MODEL_ROOT / "BugSense_AI_Model"
-MODEL_ZIP_PATH = Path("/home/sanju/Downloads/BugSense_AI_Model.zip")
+MODEL_ZIP_PATH = Path(
+    os.environ.get("BUGSENSE_MODEL_ZIP", "/home/sanju/Downloads/BugSense_AI_Model.zip")
+)
 
 
 @dataclass
@@ -196,7 +200,7 @@ def _load_model_bundle() -> ModelBundle:
     return ModelBundle(model_dir=model_dir, tokenizer=tokenizer, model=model, device=device, label_mapping=saved_mapping)
 
 
-@torch.inference_mode()
+@lru_cache(maxsize=1)
 def get_model_bundle() -> ModelBundle:
     """Return the loaded tokenizer, model, device, and label mapping."""
     return _load_model_bundle()
