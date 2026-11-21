@@ -1,0 +1,32 @@
+# User-editable rules. Loaded by engine/rules.py at startup.
+# Each rule replaces any Python rule with the same name.
+
+- name: unchecked-param-use
+  severity: warning
+  select: uses
+  where:
+    context:
+      not_in: [condition]
+    state:
+      not_in: [safe]
+    matches_param: true
+  message: "parameter '{name}' of {scope_kind} used at line {line} ({context}) with state='{state}'"
+
+- name: malloc-without-free
+  severity: warning
+  select: uses
+  where:
+    context:
+      eq: callee
+    name:
+      eq: malloc
+  require_sibling:
+    select: uses
+    where:
+      context:
+        eq: callee
+      name:
+        eq: free
+    same_function: true
+    position_after: true
+  message: "malloc at line {line} has no subsequent free in the same function"

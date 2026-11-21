@@ -1,0 +1,4 @@
+{
+  "unchecked-param-use": "error",
+  "no-dead-code": "info"
+}

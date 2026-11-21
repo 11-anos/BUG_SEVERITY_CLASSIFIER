@@ -1,0 +1,84 @@
+{
+  "name": "rule-engine-lint",
+  "displayName": "Rule Engine Linter",
+  "description": "Runs the C++ rule engine and surfaces findings as diagnostics.",
+  "version": "0.0.1",
+  "engines": { "vscode": "^1.85.0" },
+  "categories": ["Linters"],
+  "activationEvents": [
+    "onLanguage:cpp"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "ruleEngine.run",
+        "title": "Rule Engine: Run on current file"
+      },
+      {
+        "command": "ruleEngine.scanFolder",
+        "title": "Rule Engine: Scan folder…"
+      },
+      {
+        "command": "ruleEngine.scanFolderV2",
+        "title": "Rule Engine: Scan Folder v2"
+      },
+      {
+        "command": "ruleEngine.scanWorkspace",
+        "title": "Rule Engine: Scan workspace"
+      },
+      {
+        "command": "ruleEngine.showChart",
+        "title": "Rule Engine: Show findings chart"
+      },
+      {
+        "command": "ruleEngine.showChartV2",
+        "title": "Rule Engine: Show findings chart v2"
+      }
+    ],
+    "configuration": {
+      "title": "Rule Engine",
+      "properties": {
+        "ruleEngine.pythonPath": {
+          "type": "string",
+          "default": "python3.12",
+          "description": "Python 3.12 interpreter with the engine dependencies installed."
+        },
+        "ruleEngine.scriptPath": {
+          "type": "string",
+          "default": "engine/rules.py",
+          "description": "Path to rules.py, relative to the workspace root."
+        },
+        "ruleEngine.scanScriptPath": {
+          "type": "string",
+          "default": "engine/scan.py",
+          "description": "Path to scan.py, relative to the extension install folder."
+        },
+        "ruleEngine.useModel": {
+          "type": "boolean",
+          "default": true,
+          "description": "Classify finding severity with the BugSense model."
+        },
+        "ruleEngine.modelPythonPath": {
+          "type": "string",
+          "default": "",
+          "description": "Python interpreter for the severity model. Leave empty to use ruleEngine.pythonPath."
+        },
+        "ruleEngine.modelProjectPath": {
+          "type": "string",
+          "default": "",
+          "description": "Path to the predictor project. Empty auto-detects the extension's Model folder or the parent repo root."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.3.0"
+  }
+}
